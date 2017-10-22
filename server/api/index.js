@@ -18,6 +18,9 @@ router.get("/candidates/:candidateId", (req, res, next) => {
     return Candidate.findAll({
       where: {
         title: candidate.title,
+        id: {
+          $not: candidate.id //exclude the candidate him/herself
+        }
       },
       include: [Company]
     })
@@ -27,7 +30,7 @@ router.get("/candidates/:candidateId", (req, res, next) => {
     let relevantPeople = foundSameTitlePeople.filter(person => {
       return areCompaniesSimilar(person.company, candidate.company)
     })
-    let percentiles = calculatePercentiles(candidate, relevantPeople) //note: the candidate him/herself is included in the relevantPeople array
+    let percentiles = calculatePercentiles(candidate, relevantPeople)
     res.json(percentiles);
   })
   .catch(next)
@@ -44,24 +47,15 @@ function areCompaniesSimilar(company1, company2) {
 }
 
 function calculatePercentiles(candidate, arrOfPeople) {
-
   let codeScore = candidate.coding_score
   let commScore = candidate.communication_score
   let arrOfCodeScores = arrOfPeople.map(person => person.coding_score).sort((a, b) => (a - b))
   let arrOfCommScores = arrOfPeople.map(person => person.communication_score).sort((a, b) => (a - b))
 
-
-  //calculate *coding* percentile
-  //the # of entries lower than or = to this one, DIVIDED by the total length of array
+  //calculate percentiles
+  //formula: the # of entries lower than or = to this one, DIVIDED by the total length of array
    let codePercentile = arrOfCodeScores.filter(entry => (codeScore >= entry)).length / arrOfCodeScores.length
    let commPercentile = arrOfCommScores.filter(entry => (commScore >= entry)).length / arrOfCommScores.length
 
-   console.log('CODE PERCENTILE: ', codePercentile)
-   console.log('COMM percentile: ', commPercentile)
-
    return [codePercentile, commPercentile]
 }
-
-//get person (include company)
-//get candidates who are (a) at similar companies, and (b) have the same job title as orig candidate
-//calculate percentile compared to those people, in both coding and communication
