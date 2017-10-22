@@ -28,7 +28,7 @@ router.get("/candidates/:candidateId", (req, res, next) => {
       return areCompaniesSimilar(person.company, candidate.company)
     })
     let percentiles = calculatePercentiles(candidate, relevantPeople) //note: the candidate him/herself is included in the relevantPeople array
-    res.json(relevantPeople);
+    res.json(percentiles);
   })
   .catch(next)
 });
@@ -59,20 +59,7 @@ function calculatePercentiles(candidate, arrOfPeople) {
    console.log('CODE PERCENTILE: ', codePercentile)
    console.log('COMM percentile: ', commPercentile)
 
-
-  //calculate *communication* percentile
-
-
-
-
-
-  // let codingScoreSum = 0;
-  // arrOfPeople.forEach(person => {
-  //   codingScoreSum += person.coding_score
-  // })
-  // const codingScoreAvg =
-  // console.log('CODINGSCORESUM: ', codingScoreSum)
-
+   return [codePercentile, commPercentile]
 }
 
 //get person (include company)
