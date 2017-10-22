@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "simple-fractal",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Lookup tool for candidates to find their coding and communication scores compared to other candidates",
   "engines": {
     "node": ">= 7.0.0"
   },
