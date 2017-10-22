@@ -1,5 +1,8 @@
 body {
   font-family: sans-serif;
+  margin:0;
+  padding:0;
+  height:100%;
 
   a {
     text-decoration: none;
@@ -17,5 +20,70 @@ body {
   form div {
     margin: 1em;
     display: inline-block;
+  }
+
+  #main-content {
+    margin: 5% 10%;
+    text-align: center;
+  }
+
+  #footer {
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 2%;
+  }
+
+  #app {
+    min-height: 100%;
+    position: relative;
+  }
+
+  #header {
+    background:black;
+    color: white;
+    padding: 10px;
+  }
+
+  #results {
+    padding-top: 4%;
+  }
+
+  .label {
+    font-style: italic;
+    color: grey;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 3px 7px;
+    background: 0 0;
+    border: 2px solid grey;
+    border-radius: 3px;
+    margin: 0 5px;
+    color: grey;
+    font-family: Gotham,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all .3s ease;
+    &:hover {
+      background: grey;
+      color: #fff;
+      border-color: grey;
+    }
+  }
+
+  #endnote {
+    margin: 4%;
+    font-style: italic;
+    color: grey;
+  }
+
+  .block {
+    display: block;
   }
 }
