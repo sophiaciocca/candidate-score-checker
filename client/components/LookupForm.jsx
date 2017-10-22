@@ -1,4 +1,6 @@
-import React from "react";
+import React from 'react'
+import axios from 'axios'
+
 
 class LookupForm extends React.Component {
   //   const { children, handleClick } = props;
@@ -6,24 +8,38 @@ class LookupForm extends React.Component {
     super(props);
 
     this.state = {
-      cartItems: {}
+      candidateId: null
     };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchresults = this.fetchCandidateInfo.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({candidateId: event.target.value})
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const updatedValues = this.state.cartItems;
-    this.props.updateQty(updatedValues);
+    this.fetchCandidateInfo(this.state.candidateId)
+  }
+
+  fetchCandidateInfo(candidateId) {
+    axios.get(`/api/candidates/${candidateId}`)
+    .then(res => res.data)
+    .then(candidateInfo => {
+      console.log('retrieved candidate info: ', candidateInfo)
+    })
+    .catch(err => console.error('Fetching candidate information was unsuccessful', err))
   }
 
   render() {
     return (
       <div>
-        <h1>HI THIS IS LOOKUP FORM</h1>
-        <form id='lookup-form'>
+        <form id='lookup-form' onSubmit={this.handleSubmit}>
           <label>Candidate Id:</label>
-          <input type='text' name='candidate-id' />
+          <input type='text' name='candidate-id' onChange={this.handleChange} />
           <button type='submit'>Submit</button>
         </form>
       </div>
@@ -32,23 +48,3 @@ class LookupForm extends React.Component {
 }
 
 export default LookupForm;
-
-// <form id="address-form" onSubmit={handleSubmit} />
-
-// <div className="row center-block">
-// <div className="col-lg-4">
-//   <h4>Shipping Information:</h4>
-//   <br />
-//   <div>
-//     <label>Email</label>
-//     <input type="text" name="email" />
-//   </div>
-// </div>
-// </div>
-// <div className="row">
-// <div className="col-lg-12">
-//   <center>
-//     <button type="submit">Submit Order</button>
-//   </center>
-// </div>
-// </div>
