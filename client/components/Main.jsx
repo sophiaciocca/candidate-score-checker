@@ -1,26 +1,53 @@
 import React from 'react'
-import LookupForm from './LookupForm.jsx'
+import axios from 'axios'
+import Results from './Results.jsx'
 
-/**
- * COMPONENT
- *  The Main component is our 'picture frame' - it displays the navbar and anything
- *  else common to our entire app. The 'picture' inside the frame is the space
- *  rendered out by the component's `children`.
- */
-const Main = props => {
-  const { children, handleClick } = props
+class Main extends React.Component {
+  //   const { children, handleClick } = props;
+  constructor(props) {
+    super(props);
 
-  return (
-    <div>
-      <h1>Candidate Code Checker</h1>
+    this.state = {
+      candidateId: null,
+      candidatePercentiles: []
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchPercentiles = this.fetchCandidatePercentiles.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({candidatePercentiles: [], candidateId: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.fetchCandidatePercentiles(this.state.candidateId)
+  }
+
+  fetchCandidatePercentiles(candidateId) {
+    axios.get(`/api/candidates/${candidateId}`)
+    .then(res => res.data)
+    .then(candidatePercentiles => {
+      this.setState({candidatePercentiles: candidatePercentiles})
+    })
+    .catch(err => console.error('Fetching candidate information was unsuccessful', err))
+  }
+
+  render() {
+    return (
       <div>
-        <LookupForm />
+        <h1> Candidate Percentile Checker </h1>
+        <form id='lookup-form' onSubmit={this.handleSubmit}>
+          <label>Candidate Id:</label>
+          <input type='text' name='candidate-id' onChange={this.handleChange} />
+          <button type='submit'>Submit</button>
+        </form>
+        { this.state.candidateId && this.state.candidatePercentiles.length ? <Results percentiles={this.state.candidatePercentiles} /> : null }
       </div>
-
-      <hr />
-      {children}
-    </div>
-  )
+    )
+  }
 }
 
-export default Main;
+export default Main
