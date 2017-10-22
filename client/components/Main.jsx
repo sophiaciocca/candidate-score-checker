@@ -11,7 +11,8 @@ class Main extends React.Component {
 
     this.state = {
       candidateId: null,
-      candidatePercentiles: []
+      candidatePercentiles: [],
+      errorMessage: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,13 +23,19 @@ class Main extends React.Component {
   handleChange(event) {
     this.setState({
       candidatePercentiles: [],
-      candidateId: event.target.value
-    });
+      candidateId: event.target.value,
+      errorMessage: ''
+    })
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.fetchCandidatePercentiles(this.state.candidateId);
+    if(isNaN(this.state.candidateId)) {
+      this.setState({errorMessage: 'Input must be a valid number.'})
+    }
+    else {
+      this.fetchCandidatePercentiles(this.state.candidateId)
+    }
   }
 
   fetchCandidatePercentiles(candidateId) {
@@ -38,9 +45,10 @@ class Main extends React.Component {
       .then(candidatePercentiles => {
         this.setState({ candidatePercentiles: candidatePercentiles });
       })
-      .catch(err =>
+      .catch(err => {
+        this.setState({errorMessage: 'Fetching candidate information was unsuccessful. Please check to make sure you have the right candidate ID number.'})
         console.error('Fetching candidate information was unsuccessful', err)
-      );
+      })
   }
 
   render() {
@@ -62,7 +70,8 @@ class Main extends React.Component {
               <button type='submit'>Submit</button>
             </div>
           </form>
-          {this.state.candidateId && this.state.candidatePercentiles.length ? (
+          {this.state.errorMessage}
+          {!this.state.errorMessage && this.state.candidateId && this.state.candidatePercentiles.length ? (
             <Results percentiles={this.state.candidatePercentiles} />
           ) : null}
         </div>
