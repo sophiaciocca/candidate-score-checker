@@ -77,8 +77,8 @@ class Main extends React.Component {
         </div>
         <Footer />
       </div>
-    );
+    )
   }
 }
 
-export default Main;
+export default Main

@@ -3,7 +3,6 @@ const { Candidate, Company } = require("../db/models");
 module.exports = router;
 
 router.get("/candidates/:candidateId", (req, res, next) => {
-  console.log("what is candidateId on back end?", req.params.candidateId);
   let candidate, similarCompanies
   //first, get the candidate
   Candidate.findOne({

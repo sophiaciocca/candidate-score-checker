@@ -7,7 +7,7 @@ const Results = props => {
   let formattedCommPercentile = (commPercentile * 100).toFixed(1)
 
   return (
-    <div id='results'>
+    <div className='results'>
       <h2>Your Percentiles:</h2>
       <div className='row'>
         <div className='col-lg-6'>
@@ -23,7 +23,7 @@ const Results = props => {
       </div>
       <div id='endnote'>*Note: Your percentile is calculated by comparing you to other candidates with similar titles and at similar companies.</div>
     </div>
-  );
-};
+  )
+}
 
-export default Results;
+export default Results
