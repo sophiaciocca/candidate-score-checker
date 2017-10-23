@@ -6,6 +6,7 @@
 
 ![Candidate Percentile Checker](/screenshots/candidate-percentile-checker-screenshot.png?raw=true "Screenshot of Landing Page")
 
+### The app is currently deployed [here](https://sf-candidate-checker.herokuapp.com/)
 The app is built with React.js for the front-end and Node.js for the back-end.
 
 The back-end interfaces with a PostgresSQL database.
