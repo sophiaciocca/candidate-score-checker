@@ -58,6 +58,8 @@ Currently, deployment is not provided. More information can be viewed in Todo Se
 
 * More built-out UI
 
+* Deployment
+
 ## Authors
 
 * **Sophia Ciocca** - *Personal Website* - [sophiaciocca.com](http://sophiaciocca.com)
