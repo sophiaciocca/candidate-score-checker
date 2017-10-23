@@ -8,7 +8,7 @@ const Company = require('./company')
  *    BlogPost.belongsTo(User)
  */
 
- Candidate.belongsTo(Company);
+ Candidate.belongsTo(Company)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
